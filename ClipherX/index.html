@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CipherX — Message Encryption & Decryption Simulator</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="app-header">
+    <div class="header-container">
+      <div class="brand">
+        <span class="brand-badge">EDU</span>
+        <h1>CipherX</h1>
+        <p class="subtitle">Message Encryption &amp; Decryption Simulator</p>
+      </div>
+      <p class="tagline">Transform. Share. Decrypt.</p>
+    </div>
+  </header>
+
+  <main class="main-layout">
+    <section class="pipeline-section" aria-label="Cipher Execution Pipeline">
+      <div class="pipeline-card">
+        <div class="pipeline-step"><span class="step-badge">1</span> Plaintext (A)</div>
+        <div class="pipeline-arrow">&rarr;</div>
+        <div class="pipeline-step"><span class="step-badge">2</span> Chosen Algorithm</div>
+        <div class="pipeline-arrow">&rarr;</div>
+        <div class="pipeline-step"><span class="step-badge">3</span> Ciphertext</div>
+        <div class="pipeline-arrow">&rarr;</div>
+        <div class="pipeline-step"><span class="step-badge">4</span> Transfer (B)</div>
+        <div class="pipeline-arrow">&rarr;</div>
+        <div class="pipeline-step"><span class="step-badge">5</span> Inverted Shift</div>
+        <div class="pipeline-arrow">&rarr;</div>
+        <div class="pipeline-step"><span class="step-badge">6</span> Plaintext (Restored)</div>
+      </div>
+    </section>
+
+    <section class="algorithm-grid">
+      <article class="panel info-panel">
+        <div class="panel-header">
+          <h2>Active Algorithm Specifications</h2>
+          <span class="badge" id="infoDifficulty">Beginner</span>
+        </div>
+        <div class="info-content">
+          <h3 id="infoTitle">Algorithm 1 — Symbol Substitution Cipher</h3>
+          <p id="infoDesc">Maps each supported alphanumeric character directly to a designated unique non-alphanumeric symbol using an invertible 1:1 dictionary table.</p>
+          <div class="meta-tags">
+            <span class="tag"><strong>Type:</strong> <span id="infoType">Monoalphabetic Substitution</span></span>
+            <span class="tag"><strong>Reversible:</strong> <span id="infoReversible">Deterministic / Bijective</span></span>
+          </div>
+        </div>
+      </article>
+
+      <article class="panel demo-panel">
+        <div class="panel-header">
+          <h2>How This Algorithm Works</h2>
+          <span class="badge badge-accent">Live Dry Run</span>
+        </div>
+        <div class="demo-display">
+          <div class="demo-box">
+            <span class="label">Sample Input:</span>
+            <code id="demoInput">HELLO</code>
+          </div>
+          <div class="demo-arrow">&darr;</div>
+          <div class="demo-box">
+            <span class="label">Transformed:</span>
+            <code id="demoEncrypted">!%LL*</code>
+          </div>
+          <div class="demo-arrow">&darr;</div>
+          <div class="demo-box">
+            <span class="label">Restored:</span>
+            <code id="demoDecrypted">HELLO</code>
+          </div>
+        </div>
+      </article>
+    </section>
+
+    <div class="workspace-grid">
+      <section class="panel user-panel user-a" aria-labelledby="userAHeading">
+        <div class="panel-header">
+          <div class="user-identity">
+            <span class="user-avatar">A</span>
+            <div>
+              <h2 id="userAHeading">User A &mdash; Sender (Encrypt)</h2>
+              <span class="role-desc">Source Originator</span>
+            </div>
+          </div>
+          <button type="button" class="btn btn-secondary btn-sm" id="btnRandomMessage" title="Insert a randomized sample prompt">
+            Random Sample
+          </button>
+        </div>
+
+        <div class="form-group">
+          <div class="label-row">
+            <label for="plainTextInput">Plaintext Message</label>
+            <span class="char-counter" id="charCountA">Characters: 0</span>
+          </div>
+          <textarea id="plainTextInput" rows="4" placeholder="Enter message to encrypt (e.g., Meet me at 8:30 PM)..."></textarea>
+        </div>
+
+        <div class="form-group">
+          <label for="algoSelectA">Select Encryption Algorithm</label>
+          <select id="algoSelectA" class="algorithm-select">
+            <option value="1">Algorithm 1 — Symbol Substitution Cipher</option>
+            <option value="2">Algorithm 2 — Mixed Character Substitution</option>
+            <option value="3">Algorithm 3 — Caesar Shift (k = 3)</option>
+            <option value="4">Algorithm 4 — Atbash / Reverse Alphabet</option>
+            <option value="5">Algorithm 5 — Numeric Cipher (Delimited)</option>
+            <option value="6">Algorithm 6 — ASCII Mathematical Offset (+7)</option>
+            <option value="7">Algorithm 7 — Position-Based Index Shift</option>
+            <option value="8">Algorithm 8 — Adjacent Pair-Swap</option>
+            <option value="9">Algorithm 9 — Hexadecimal XOR Transformation</option>
+            <option value="10">Algorithm 10 — Multi-Step Inversion Pipeline</option>
+          </select>
+        </div>
+
+        <div class="button-bar">
+          <button type="button" class="btn btn-primary" id="btnEncrypt">
+            &#128274; Encrypt Message
+          </button>
+          <button type="button" class="btn btn-warning" id="btnVerify">
+            Verify Cipher
+          </button>
+          <button type="button" class="btn btn-secondary" id="btnClearA">Clear</button>
+        </div>
+
+        <div class="status-banner" id="statusA" role="status" aria-live="polite"></div>
+
+        <div class="form-group">
+          <div class="label-row">
+            <label for="cipherOutputA">Encrypted Ciphertext</label>
+          </div>
+          <textarea id="cipherOutputA" rows="4" readonly placeholder="Encrypted payload appears here..."></textarea>
+        </div>
+
+        <div class="button-bar actions-bar">
+          <button type="button" class="btn btn-secondary btn-sm" id="btnCopyA">Copy</button>
+          <button type="button" class="btn btn-accent btn-sm" id="btnSendToB">
+            &#8644; Send to User B
+          </button>
+        </div>
+      </section>
+
+      <section class="panel user-panel user-b" aria-labelledby="userBHeading">
+        <div class="panel-header">
+          <div class="user-identity">
+            <span class="user-avatar">B</span>
+            <div>
+              <h2 id="userBHeading">User B &mdash; Receiver (Decrypt)</h2>
+              <span class="role-desc">Recipient Node</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <div class="label-row">
+            <label for="cipherInputB">Paste Ciphertext</label>
+            <span class="char-counter" id="charCountB">Characters: 0</span>
+          </div>
+          <textarea id="cipherInputB" rows="4" placeholder="Paste encrypted payload here..."></textarea>
+        </div>
+
+        <div class="form-group">
+          <label for="algoSelectB">Select Decryption Algorithm</label>
+          <select id="algoSelectB" class="algorithm-select">
+            <option value="1">Algorithm 1 — Symbol Substitution Cipher</option>
+            <option value="2">Algorithm 2 — Mixed Character Substitution</option>
+            <option value="3">Algorithm 3 — Caesar Shift (k = 3)</option>
+            <option value="4">Algorithm 4 — Atbash / Reverse Alphabet</option>
+            <option value="5">Algorithm 5 — Numeric Cipher (Delimited)</option>
+            <option value="6">Algorithm 6 — ASCII Mathematical Offset (+7)</option>
+            <option value="7">Algorithm 7 — Position-Based Index Shift</option>
+            <option value="8">Algorithm 8 — Adjacent Pair-Swap</option>
+            <option value="9">Algorithm 9 — Hexadecimal XOR Transformation</option>
+            <option value="10">Algorithm 10 — Multi-Step Inversion Pipeline</option>
+          </select>
+        </div>
+
+        <div class="button-bar">
+          <button type="button" class="btn btn-success" id="btnDecrypt">
+            &#128275; Decrypt Message
+          </button>
+          <button type="button" class="btn btn-secondary" id="btnClearB">Clear</button>
+        </div>
+
+        <div class="status-banner" id="statusB" role="status" aria-live="polite"></div>
+
+        <div class="form-group">
+          <div class="label-row">
+            <label for="plainOutputB">Decrypted Message</label>
+          </div>
+          <textarea id="plainOutputB" rows="4" readonly placeholder="Recovered message appears here..."></textarea>
+        </div>
+
+        <div class="button-bar actions-bar">
+          <button type="button" class="btn btn-secondary btn-sm" id="btnCopyB">Copy</button>
+        </div>
+      </section>
+    </div>
+
+    <section class="panel history-section" aria-label="Session Cipher History">
+      <div class="panel-header">
+        <div class="title-with-badge">
+          <h2>Transmission Journal</h2>
+          <span class="subtitle-inline">(Preserved in LocalStorage)</span>
+        </div>
+        <button type="button" class="btn btn-danger btn-sm" id="btnClearHistory">Purge History</button>
+      </div>
+      <div class="history-table-wrapper">
+        <table class="history-table">
+          <thead>
+            <tr>
+              <th scope="col">Timestamp</th>
+              <th scope="col">Algorithm</th>
+              <th scope="col">Ciphertext Snippet</th>
+              <th scope="col">Action</th>
+            </tr>
+          </thead>
+          <tbody id="historyTableBody">
+            <tr>
+              <td colspan="4" class="empty-state">No past session records available.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <div class="global-actions">
+      <button type="button" class="btn btn-outline-danger" id="btnClearAll">Reset All State</button>
+    </div>
+
+    <aside class="educational-notice" role="contentinfo">
+      <strong>Educational Notice:</strong> CipherX is an educational cipher simulator. The classical substitution, permutation, and single-byte operations implemented here are intended to illustrate cryptographic history, reversible transformations, and mechanical vulnerability. They provide no modern confidentiality, lack semantic security, and must <em>never</em> be used for real-world authentication or confidential communications.
+    </aside>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
